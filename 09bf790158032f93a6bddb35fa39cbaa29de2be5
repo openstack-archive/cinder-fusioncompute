@@ -1,0 +1,9 @@
+Code-Review+1: Dong Zhi <517341003@qq.com>
+Code-Review+2: Huawei FusionCompute CI <zhidong@huawei.com>
+Workflow+1: Huawei FusionCompute CI <zhidong@huawei.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Mon, 14 Nov 2016 16:08:21 +0000
+Reviewed-on: https://review.openstack.org/394921
+Project: openstack/cinder-fusioncompute
+Branch: refs/heads/master
