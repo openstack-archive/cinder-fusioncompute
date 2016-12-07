@@ -1,0 +1,8 @@
+Code-Review+2: Dong Zhi <517341003@qq.com>
+Workflow+1: Dong Zhi <517341003@qq.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Wed, 07 Dec 2016 15:56:09 +0000
+Reviewed-on: https://review.openstack.org/408169
+Project: openstack/cinder-fusioncompute
+Branch: refs/heads/master
