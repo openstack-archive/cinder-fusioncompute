@@ -22,8 +22,8 @@ import json
 from oslo_log import log as logging
 
 from cinder.i18n import _
-from cinder.volume.drivers.huawei.vrm.base_proxy import BaseProxy
-from cinder.volume.drivers.huawei.vrm import exception as driver_exception
+from cinder.volume.drivers.huawei.fusioncompute.base_proxy import BaseProxy
+from cinder.volume.drivers.huawei.fusioncompute import exception as driver_exception
 
 TASK_WAITING = 'waiting'
 TASK_RUNNING = 'running'
