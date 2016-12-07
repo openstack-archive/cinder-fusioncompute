@@ -18,7 +18,7 @@ from oslo_log import log as logging
 
 from cinder import context as cinder_context
 from cinder.i18n import _
-from cinder.volume.drivers.huawei.vrm.vrm_driver import VRMDriver
+from cinder.volume.drivers.huawei.fusioncompute.vrm_driver import VRMDriver
 
 
 def metadata_to_dict(metadata):

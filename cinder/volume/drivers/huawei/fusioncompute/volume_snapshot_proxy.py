@@ -24,10 +24,10 @@ from oslo_log import log as logging
 
 from cinder import exception as cinder_exception
 from cinder.i18n import _
-from cinder.volume.drivers.huawei.vrm.base_proxy import BaseProxy
-from cinder.volume.drivers.huawei.vrm import exception as driver_exception
-from cinder.volume.drivers.huawei.vrm.task_proxy import TaskProxy
-from cinder.volume.drivers.huawei.vrm.utils import Delete_Snapshot_Code
+from cinder.volume.drivers.huawei.fusioncompute.base_proxy import BaseProxy
+from cinder.volume.drivers.huawei.fusioncompute import exception as driver_exception
+from cinder.volume.drivers.huawei.fusioncompute.task_proxy import TaskProxy
+from cinder.volume.drivers.huawei.fusioncompute.utils import Delete_Snapshot_Code
 
 
 CONF = cfg.CONF

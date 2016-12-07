@@ -23,15 +23,15 @@ from cinder import exception
 from cinder.i18n import _
 from cinder import volume
 from cinder.volume import driver
-from cinder.volume.drivers.huawei.vrm.cluster_proxy import ClusterProxy
-from cinder.volume.drivers.huawei.vrm.conf import FC_DRIVER_CONF
-from cinder.volume.drivers.huawei.vrm.datastore_proxy import DatastoreProxy
-from cinder.volume.drivers.huawei.vrm import exception as driver_exception
-from cinder.volume.drivers.huawei.vrm.host_proxy import HostProxy
-from cinder.volume.drivers.huawei.vrm.http_client import VRMHTTPClient
-from cinder.volume.drivers.huawei.vrm.vm_proxy import VmProxy
-from cinder.volume.drivers.huawei.vrm.volume_proxy import VolumeProxy
-from cinder.volume.drivers.huawei.vrm.volume_snapshot_proxy import \
+from cinder.volume.drivers.huawei.fusioncompute.cluster_proxy import ClusterProxy
+from cinder.volume.drivers.huawei.fusioncompute.conf import FC_DRIVER_CONF
+from cinder.volume.drivers.huawei.fusioncompute.datastore_proxy import DatastoreProxy
+from cinder.volume.drivers.huawei.fusioncompute import exception as driver_exception
+from cinder.volume.drivers.huawei.fusioncompute.host_proxy import HostProxy
+from cinder.volume.drivers.huawei.fusioncompute.http_client import VRMHTTPClient
+from cinder.volume.drivers.huawei.fusioncompute.vm_proxy import VmProxy
+from cinder.volume.drivers.huawei.fusioncompute.volume_proxy import VolumeProxy
+from cinder.volume.drivers.huawei.fusioncompute.volume_snapshot_proxy import \
     VolumeSnapshotProxy
 from cinder.volume import utils as volume_utils
 
@@ -51,6 +51,17 @@ def metadata_to_dict(metadata):
         if not item.get('deleted'):
             result[item['key']] = item['value']
     return result
+
+
+def string_to_dict(string):
+    if string is not None:
+        dic = {}
+        split_string = string.split(',')
+        for item in split_string:
+            ts = item.split("=")
+            if ts.__len__() == 2:
+                dic[ts[0]] = ts[1]
+        return dic
 
 
 LOG = logging.getLogger(__name__)
@@ -563,7 +574,7 @@ class VRMDriver(driver.VolumeDriver):
         LOG.info(_("[BRM-DRIVER] start _vrm_unpack_provider_location() "))
         kvalue = None
         kvs = {}
-        if not isinstance(provider_location, None) and len(
+        if provider_location is not None and len(
                 provider_location) > 0:
             items = provider_location.split(',')
             for item in items:
@@ -763,7 +774,6 @@ class VRMDriver(driver.VolumeDriver):
         :return:
         '''
         LOG.info(_("[BRM-DRIVER] start create_volume() "))
-
         vol_meta = volume.get('volume_metadata')
         vol_meta_dict = metadata_to_dict(vol_meta)
         linked_clone = vol_meta_dict.get('linked_clone')
@@ -806,14 +816,14 @@ class VRMDriver(driver.VolumeDriver):
                     "[CINDER-BRM] host format exception, host is %s ") %
                 volume.get('host'))
             raise ex
-
         datastore = self._choose_datastore(ds_meta)
         if datastore:
             LOG.info(_("[CINDER-VRM] datastore [%s],"), datastore)
+            args_dict['independent'] = "false"
             if str(datastore.get('storageType')).upper() in ['LUN']:
                 LOG.info(_("[CINDER-VRM] rdm disk [%s]"), volume['id'])
                 args_dict['size'] = int(datastore.get('capacityGB'))
-                args_dict['independent'] = True
+                args_dict['independent'] = "true"
 
             args_dict['ds_urn'] = datastore.get('urn')
             is_thin = self.check_thin(datastore, is_thin)
@@ -894,7 +904,7 @@ class VRMDriver(driver.VolumeDriver):
         LOG.info(_("[BRM-DRIVER] start delete_volume() "))
         self._vrm_delete_volume(volume)
 
-    def create_export(self, context, volume):
+    def create_export(self, context, volume, connector):
         '''create_export
 
         create_export
@@ -1239,9 +1249,8 @@ class VRMDriver(driver.VolumeDriver):
         args_dict['volume_id'] = os_vol_id
         args_dict['volume_size'] = vol_size
         args_dict['is_thin'] = FC_DRIVER_CONF.vrm_is_thin
-
-        vol_meta = volume.get('volume_metadata')
-        vol_meta_dict = metadata_to_dict(vol_meta)
+        vol_meta = volume.get('provider_location')
+        vol_meta_dict = string_to_dict(vol_meta)
         linked_clone = vol_meta_dict.get('linked_clone')
         args_dict['volume_urn'] = vol_meta_dict.get('urn')
         if linked_clone is None:
@@ -1555,7 +1564,7 @@ class VRMDriver(driver.VolumeDriver):
         '''
         pass
 
-    def detach_volume(self, context, volume):
+    def detach_volume(self, context, volume, detachment):
         '''detach_volume
 
         :param context:

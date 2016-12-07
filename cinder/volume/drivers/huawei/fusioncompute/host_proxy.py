@@ -20,7 +20,7 @@
 
 from oslo_log import log as logging
 
-from cinder.volume.drivers.huawei.vrm.base_proxy import BaseProxy
+from cinder.volume.drivers.huawei.fusioncompute.base_proxy import BaseProxy
 
 
 TASK_WAITING = 'waiting'
