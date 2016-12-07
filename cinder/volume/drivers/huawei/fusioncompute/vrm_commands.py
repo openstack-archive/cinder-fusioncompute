@@ -21,8 +21,8 @@ from oslo_log import log as logging
 
 from cinder import exception as cinder_exception
 from cinder.i18n import _
-from cinder.volume.drivers.huawei.vrm.conf import FC_DRIVER_CONF
-from cinder.volume.drivers.huawei.vrm import exception as driver_exception
+from cinder.volume.drivers.huawei.fusioncompute.conf import FC_DRIVER_CONF
+from cinder.volume.drivers.huawei.fusioncompute import exception as driver_exception
 
 TASK_WAITING = 'waiting'
 TASK_RUNNING = 'running'

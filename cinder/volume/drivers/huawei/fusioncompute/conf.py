@@ -100,6 +100,16 @@ VRM_opts = [
     cfg.StrOpt('export_version',
                default='v6.0',
                help='export version of VHD'),
+    cfg.StrOpt('glance_host',
+               default='v6.0',
+               help='ip of glance server'),
+    cfg.StrOpt('glance_port',
+               default='v6.0',
+               help='ip of glance server'),
+    cfg.StrOpt('glance_host_ip',
+               default='v6.0',
+               help='ip of glance server'),
+
 ]
 CONF = cfg.CONF
 CONF.register_group(VRM_group)

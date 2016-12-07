@@ -25,9 +25,9 @@ from oslo_log import log as logging
 
 from cinder import exception
 from cinder.i18n import _
-from cinder.volume.drivers.huawei.vrm.base_proxy import BaseProxy
-from cinder.volume.drivers.huawei.vrm.conf import FC_DRIVER_CONF
-from cinder.volume.drivers.huawei.vrm.task_proxy import TaskProxy
+from cinder.volume.drivers.huawei.fusioncompute.base_proxy import BaseProxy
+from cinder.volume.drivers.huawei.fusioncompute.conf import FC_DRIVER_CONF
+from cinder.volume.drivers.huawei.fusioncompute.task_proxy import TaskProxy
 
 try:
     from eventlet import sleep
@@ -386,14 +386,9 @@ class VmProxy(BaseProxy):
         else:
             template = 'false'
 
-        if CONF.glance_host is None or str(CONF.glance_port) is None \
-                or FC_DRIVER_CONF.glance_server_ip is None:
-            raise exception.ParameterNotFound(param='glance_host or '
-                                                    'glance_port or glance_ip')
-
-        endpoint = CONF.glance_host + ":" + str(CONF.glance_port)
         token = kwargs.get('auth_token')
-        serviceIp = FC_DRIVER_CONF.glance_server_ip
+        endpoint = str(FC_DRIVER_CONF.glance_host) + ":" + str(FC_DRIVER_CONF.glance_port)
+        serviceIp = FC_DRIVER_CONF.glance_host_ip
         body = {
             'name': 'cinder-vm-' + name,
             'group': 'FSP',

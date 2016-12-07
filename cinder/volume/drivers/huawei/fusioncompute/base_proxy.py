@@ -22,8 +22,8 @@ import urlparse
 from oslo_config import cfg
 from oslo_log import log as logging
 
-from cinder.volume.drivers.huawei.vrm.conf import FC_DRIVER_CONF
-from cinder.volume.drivers.huawei.vrm.http_client import VRMHTTPClient
+from cinder.volume.drivers.huawei.fusioncompute.conf import FC_DRIVER_CONF
+from cinder.volume.drivers.huawei.fusioncompute.http_client import VRMHTTPClient
 
 
 TASK_WAITING = 'waiting'

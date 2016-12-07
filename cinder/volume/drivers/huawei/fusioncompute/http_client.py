@@ -25,9 +25,9 @@ from oslo_config import cfg
 from oslo_log import log as logging
 
 from cinder.i18n import _
-from cinder.volume.drivers.huawei.vrm.conf import FC_DRIVER_CONF
-from cinder.volume.drivers.huawei.vrm import exception as driver_exception
-from cinder.volume.drivers.huawei.vrm import utils as apiutils
+from cinder.volume.drivers.huawei.fusioncompute.conf import FC_DRIVER_CONF
+from cinder.volume.drivers.huawei.fusioncompute import exception as driver_exception
+from cinder.volume.drivers.huawei.fusioncompute import utils as apiutils
 
 try:
     from eventlet import sleep
@@ -249,7 +249,7 @@ class VRMHTTPClient(object):
                     'Content-Type'] = 'application/json;charset=UTF-8'
                 kwargs['data'] = kwargs['body']
 
-            body = apiutils.str_drop_password_key(kwargs['body'])
+            #body = apiutils.str_drop_password_key(kwargs['body'])
             # LOG.info(_("[VRM-CINDER] request body [%s]"), body)
             del kwargs['body']
 
